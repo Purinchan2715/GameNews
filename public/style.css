@@ -1,0 +1,122 @@
+/* 基本設定：すべての要素でボックスサイズを統一 */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ページ全体のスタイル */
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #f4f7f6; /* 少し青みがかった明るいグレー */
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ヘッダーのスタイル */
+header {
+    background: linear-gradient(135deg, #00c6ff, #0072ff); /* 鮮やかな青のグラデーション */
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.header-container p {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* メインコンテンツ（ニュース一覧部分） */
+main {
+    flex: 1; /* フッターを一番下に押しやるために領域を広げる */
+    padding: 2rem 1rem;
+    max-width: 800px; /* 画面が広くても中央に寄せる */
+    margin: 0 auto;
+    width: 100%;
+}
+
+.news-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* カードとカードの隙間 */
+}
+
+/* ニュースカードのデザイン */
+.news-card {
+    background-color: white;
+    border-radius: 8px; /* 角を丸くする */
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 軽い影をつける */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* ホバー時のアニメーション設定 */
+}
+
+/* マウスが乗った時のエフェクト */
+.news-card:hover {
+    transform: translateY(-3px); /* 少し上に浮く */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* 影を濃くする */
+}
+
+/* サイト名や日付を表示するエリア */
+.news-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.news-source {
+    font-weight: bold;
+    color: #0072ff;
+}
+
+/* ニュースタイトル */
+.news-title {
+    font-size: 1.25rem;
+    line-height: 1.4;
+}
+
+.news-title a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.news-title a:hover {
+    color: #0072ff; /* ホバーで青くする */
+}
+
+/* フッターのスタイル */
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #333;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+/* ローディングやエラー時のメッセージスタイル */
+.loading, .error, .empty {
+    text-align: center;
+    font-size: 1.1rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.error {
+    color: #e74c3c;
+}

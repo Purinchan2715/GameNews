@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Positive Game News</title>
+    <!-- CSSファイルを読み込む -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fontsからフォントを読み込む -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1>Positive Game News</h1>
+            <p>ネガティブな話題を省いた、ゲームの楽しいニュースだけをお届けします。</p>
+        </div>
+    </header>
+
+    <main>
+        <!-- ニュースがJavaScriptでここに挿入されます -->
+        <div id="news-container" class="news-container">
+            <p class="loading">ニュースを読み込んでいます...</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Positive Game News Aggregator</p>
+    </footer>
+
+    <!-- ニュースデータを読み込んで表示するJavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const newsContainer = document.getElementById('news-container');
+            
+            try {
+                // news.json からデータを取得
+                const response = await fetch('news.json');
+                
+                if (!response.ok) {
+                    throw new Error('ニュースの読み込みに失敗しました。');
+                }
+                
+                const newsList = await response.json();
+                
+                // 読み込み中の文字を消す
+                newsContainer.innerHTML = '';
+                
+                if (newsList.length === 0) {
+                    newsContainer.innerHTML = '<p class="empty">現在表示できるニュースがありません。</p>';
+                    return;
+                }
+                
+                // ニュースの配列をループしてHTMLを作成
+                newsList.forEach(news => {
+                    const articleEl = document.createElement('article');
+                    articleEl.className = 'news-card';
+                    
+                    // 日付のフォーマット (例: 2026-09-04 12:34)
+                    const dateObj = new Date(news.published_at);
+                    const formattedDate = dateObj.toLocaleString('ja-JP', {
+                        year: 'numeric', month: '2-digit', day: '2-digit',
+                        hour: '2-digit', minute: '2-digit'
+                    });
+                    
+                    // カード内のHTMLを組み立てる
+                    articleEl.innerHTML = `
+                        <div class="news-meta">
+                            <span class="news-source">${news.source_site}</span>
+                            <span class="news-date">${formattedDate}</span>
+                        </div>
+                        <h2 class="news-title">
+                            <a href="${news.url}" target="_blank" rel="noopener noreferrer">${news.title}</a>
+                        </h2>
+                    `;
+                    
+                    // コンテナに追加
+                    newsContainer.appendChild(articleEl);
+                });
+                
+            } catch (error) {
+                console.error(error);
+                newsContainer.innerHTML = '<p class="error">ニュースの取得中にエラーが発生しました。</p>';
+            }
+        });
+    </script>
+</body>
+</html>
